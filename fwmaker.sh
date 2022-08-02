@@ -373,7 +373,6 @@ done
 
 
 #creating the new firmware archive
-#zip -qq -r $S2985_dir/$new_dir.zip $S2985_dir/$new_dir &&
 cd $S2985_dir
 zip -qq -r $new_dir.zip $new_dir &&
 cd - > /dev/null
