@@ -1,0 +1,14 @@
+7.5.3.6(R0004.0465)
+FIX|CRM20220714011237 issue with 'dot1x re-authentication'
+
+7.5.3.6(R0004.0463)
+FIX|CRM20220721011331 PoE affects VCT detection
+
+7.5.3.6(R0004.0461)
+ADD|CRM20220720011308 add ability to view vlans in instance by snmp while spanning tree is not enable
+
+7.5.3.6(R0004.0460)
+FIX|CRM20220718011279 cfm function mepid cannot be configured
+
+7.5.3.6(R0004.0459)
+FIX|CRM20220719011301 issue with ifLastChange OID

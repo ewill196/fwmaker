@@ -1,0 +1,6 @@
+7.5.3.0(R0010.0289)
+ADD|CRM20220720011308 add ability to view vlans in instance by snmp while spanning tree is not enable
+
+7.5.3.0(R0010.0288)
+FIX|CRM20220719011301 issue with ifLastChange OID
+
