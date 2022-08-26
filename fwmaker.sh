@@ -18,6 +18,9 @@ S2985_dir="/tmp/S2985G"
 S2989_url="SNR-S2989G/recommended/"
 S2989_dir="/tmp/S2989G"
 
+S2989_48_url="SNR-S2989G-48TX/recommended/"
+S2989_48_dir="/tmp/S2989G_48"
+
 S2995_url="SNR-S2995G/recommended/"
 S2995_dir="/tmp/S2995"
 
@@ -459,6 +462,90 @@ done
 #creating the new firmware archive
 #zip -qq -r $S2989_dir/$new_dir.zip $S2989_dir/$new_dir &&
 cd $S2989_dir
+zip -qq -r $new_dir.zip $new_dir &&
+cd - > /dev/null
+
+#final output
+WHITE='\033[0;37m'
+GREEN='\033[0;32m'
+
+printf "${GREEN}The archive ${WHITE}$new_dir.zip ${GREEN}has been made\n"
+fi
+
+#########################
+####SNR-S2989G-48TX######
+#########################
+
+if [[ "$1" == "2989-48" ]]; then
+mkdir $S2989_48_dir &&
+
+#download the archive
+wget -nv -A zip --mirror --no-parent -e robots=off https://$general_url$S2989_48_url &&
+
+#remove the archive to the special directory and remove old directoty
+mv ./data.nag.ru/SNR\ Switches/Firmware/$S2989_48_url*.zip $S2989_48_dir/ &&
+rm -r ./data.nag.ru/ &&
+
+#extract the archive and delete it
+unzip -qq $S2989_48_dir/*.zip -d $S2989_48_dir&&
+rm -f $S2989_48_dir/*.zip &&
+
+#get unix-style directory name
+S2989_48_tempdir=$(ls $S2989_48_dir | grep 2989)
+
+#take a name from new the firmware file
+S2989_48_rawfile=$(ls ./S2989-48 | grep vendor)
+
+#take the first half of firmware directory
+first="${S2989_48_tempdir%(*}"
+
+#take a version from new firware file
+left_raw="${S2989_48_rawfile%)*}"
+
+middle_raw="${left_raw##*(}"
+
+#form a new name for the folder
+new_dir="$first($middle_raw)"
+
+#rename the folder
+mv $S2989_48_dir/$S2989_48_tempdir $S2989_48_dir/$new_dir &&
+
+#rename the file
+old_file=$(ls $S2989_48_dir/$new_dir | grep img)
+mv ./S2989-48/$S2989_48_rawfile $S2989_48_dir/$new_dir/$new_dir.img &&
+
+#remove old IMG file
+rm $S2989_48_dir/$new_dir/$old_file &&
+
+#make new md5sums file
+
+cd $S2989_48_dir/$new_dir
+rm -f MD5SUMS &&
+md5sum *.img > MD5SUMS &&
+#md5sum *.rom >> MD5SUMS &&
+cd - > /dev/null
+
+#add new fixes to the changelog file
+
+arr=()
+while IFS= read -r line; do
+	arr+=("$line")
+done <./S2989-48/new_fixes.txt
+
+for each in "${arr[@]}"
+	do
+		echo "$each" > /dev/null
+	done
+
+for (( idx=${#arr[@]}-1 ; idx>=0 ; idx-- )) ; do
+#	echo "${arr[idx]}"
+	sed -i "1s/^/${arr[idx]}\n/" $S2989_48_dir/$new_dir/SNR-S2989G_changelog.txt
+done
+
+
+#creating the new firmware archive
+#zip -qq -r $S2989_dir/$new_dir.zip $S2989_dir/$new_dir &&
+cd $S2989_48_dir
 zip -qq -r $new_dir.zip $new_dir &&
 cd - > /dev/null
 
@@ -1077,9 +1164,9 @@ fi
 ###########################
 
 if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
-	printf "\nArgument:    Description\n\n2962    -    SNR-S2962 Series\n2965    -    SNR-S2965 Series\n2982    -    SNR-S2982G Series\n2985    -    SNR-S2985G Series\n2989    -    SNR-S2989G Series\n2995    -    SNR-S2995 Series\n3850    -    SNR-S3850-24FX\n300G    -    SNR-S300G-24FX\n2990X   -    SNR-S2990X-24FQ\n2990X-HA-    SNR-S2990X-24FQ-VSF_HA\n300X    -    SNR-S300X-24FQ\n4650    -    SNR-S4650X-48FQ\n\n"
+	printf "\nArgument:    Description\n\n2962    -    SNR-S2962 Series\n2965    -    SNR-S2965 Series\n2982    -    SNR-S2982G Series\n2985    -    SNR-S2985G Series\n2989    -    SNR-S2989G Series\n2989-48 -    SNR-S2989G-48TX Series\n2995    -    SNR-S2995 Series\n3850    -    SNR-S3850-24FX\n300G    -    SNR-S300G-24FX\n2990X   -    SNR-S2990X-24FQ\n2990X-HA-    SNR-S2990X-24FQ-VSF_HA\n300X    -    SNR-S300X-24FQ\n4650    -    SNR-S4650X-48FQ\n\n"
 fi
 
 if [ "$1" == "-v" ] || [ "$1" == "--version" ]; then
-	printf "\nFwmaker is a utility for automation making firmware archives for SNR Switches (NAG LLC)\n\nAuthor: Evgeniy Mirkhasanov, Systems Engineer\nVersion: 0.5\n2022\n\n"
+	printf "\nFwmaker is a utility for automation making firmware archives for SNR Switches (NAG LLC)\n\nAuthor: Evgeniy Mirkhasanov, Systems Engineer\nVersion: 0.6\n2022\n\n"
 fi

@@ -1,0 +1,30 @@
+ADD|CRM20220606010739 issue with multicast traffic on BLK port in RSTP
+
+7.5.3.6(R0004.0467)
+FIX|CRM20220725011358 The encryption algorithm sha256 is enabled and login cannot be enabled
+
+7.5.3.6(R0004.0465)
+FIX|CRM20220714011237 issue with 'dot1x re-authentication'
+
+7.5.3.6(R0004.0463)
+FIX|CRM20220721011331 Poe affects VCT detection
+
+7.5.3.6(R0004.0461)
+ADD|CRM20220720011308 add ability to view vlans in instance by snmp while spanning tree is not enable
+
+7.5.3.6(R0004.0460)
+FIX|CRM20220718011279 Cfm function mepid cannot be configured
+
+7.5.3.6(R0004.0459)
+FIX|CRM20220719011301 issue with ifLastChange OID
+
+7.5.3.6(R0004.0458)
+FIX|CRM20220623010964 issue with option 82 toward cisco server 
+ADD|CRM20220704011110 add oid for getting Vlan MAC
+
+7.5.3.6(R0004.0456)
+FIX|CRM20220606010741 issue with switch stuck and reboot by watchdog “tCpuRxLimitNotify”
+
+7.5.3.6(R0004.0455)
+FIX|CRM20220616010867 issue with spanning-tree output
+
